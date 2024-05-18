@@ -1,0 +1,27 @@
+# Charger les données
+data <- read.csv("open_stats_coronavirus.csv", sep = ";", header = TRUE)
+
+# Afficher les premières lignes
+head(data)
+
+# Statistiques descriptives
+summary(data)
+
+# Graphiques
+hist(data$cas, main = "Distribution des cas", xlab = "Cas de Covid-19")
+boxplot(data$cas, main = "Boîte à moustaches des cas de Covid-19")
+# Coefficient de corrélation linéaire
+correlation <- cor(data$cas, data$deces, use = "complete.obs")
+print(correlation)
+
+# Régression linéaire
+regression <- lm(deces ~ cas, data = data)
+summary(regression)
+# Hypothèse nulle: Il n'y a pas de corrélation entre les cas et les décès
+# Test de corrélation
+cor_test <- cor.test(data$cas, data$deces)
+print(cor_test)
+
+# Test de médiane
+median_test <- wilcox.test(data$cas, data$deces)
+print(median_test)
